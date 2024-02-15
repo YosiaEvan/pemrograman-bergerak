@@ -3,10 +3,13 @@ package com.example.aplikasifieldtrip;
 // import database SQLLite
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
     // deklarasi setiap variabel dalam Database yang bersifat Final
@@ -58,6 +61,35 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // ketika sudah selesai digunakan, tutup database
         db.close();
+    }
+
+    // membuat sebuah method untuk mengambil nilai dari SQLLite dan dimasukan ke dalam sebuah array list berdasarkan constructor DataMahasiswa
+    public ArrayList<DataMahasiswa> listMahasiswa() {
+        // membuat sebuah comand untuk membaca data dari database
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // menginisiasikan sebuah cursor untuk membaca data dari database dan menentukan posisi terakhir dari row tersimpan
+        Cursor cursorMhs = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+        // menginisiasi sebuah ArrayList
+        ArrayList<DataMahasiswa> dataMahasiswaArrayList = new ArrayList<>();
+
+        // memindahkan posisi cursor ke barus pertama dari database kemudian membaca sampai ke baris akhir
+        if(cursorMhs.moveToFirst()) {
+            do {
+                dataMahasiswaArrayList.add(new DataMahasiswa(
+                        cursorMhs.getString(1),
+                        cursorMhs.getString(2),
+                        cursorMhs.getString(3),
+                        cursorMhs.getString(4)
+                ));
+            } while (cursorMhs.moveToNext()); // cursor berpindah ke baris selanjutnya
+        }
+
+        // ketika sudah selesai digunakan, tutup cursor
+        cursorMhs.close();
+
+        return dataMahasiswaArrayList;
     }
 
     @Override
