@@ -38,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
                 String noHPMhs = txtNoHandphone.getText().toString();
                 String noMakanMhs = txtNoMakan.getText().toString();
 
+                // mengecek apakah ada field yang kosong berdasarkan nilai string yang sudah dimasukan
+                if(namaMhs.isEmpty() && nimMhs.isEmpty() && noHPMhs.isEmpty() && noMakanMhs.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Tolong isi semua Field", Toast.LENGTH_SHORT).show();
+                }
+
                 dbHandler.tambahMahasiswa(namaMhs, nimMhs, noHPMhs,noMakanMhs);
 
                 // membuat notifikasi dalam bentuk toast untuk menyatakan data tersimpan
