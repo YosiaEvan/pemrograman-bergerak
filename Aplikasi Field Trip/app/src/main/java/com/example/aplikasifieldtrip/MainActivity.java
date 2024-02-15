@@ -2,6 +2,7 @@ package com.example.aplikasifieldtrip;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     // deklarasi beberapa variabel/object yang digunakan di dalam aplikasi utama
     private EditText txtNama, txtNIM, txtNoHandphone, txtNoMakan;
-    private Button btnTambahMahasiswa;
+    private Button btnTambahMahasiswa, btnDaftarMahasiswa;
     DBHandler dbHandler;
 
     @Override
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         txtNoHandphone = findViewById(R.id.txtNoHPMhs);
         txtNoMakan = findViewById(R.id.txtNoMakanMhs);
         btnTambahMahasiswa = findViewById(R.id.btnTambahMhs);
+        btnDaftarMahasiswa = findViewById(R.id.btnDaftarMahasiswa);
 
         // menginisiasi dari class dbHandler untuk mengirimkan context yang ingin dimasukan ke database
         dbHandler = new DBHandler(MainActivity.this);
@@ -53,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
                 txtNIM.setText("");
                 txtNoHandphone.setText("");
                 txtNoMakan.setText("");
+            }
+        });
+
+        // membuat sebuah action ketika tombol btnDaftarMahasiswa di klik
+        btnDaftarMahasiswa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent ( MainActivity.this, DaftarMahasiswa.class);
+                startActivity(i);
             }
         });
     }
